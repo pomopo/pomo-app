@@ -109,6 +109,8 @@ source .venv/bin/activate
 ```
 pip install fastapi uvicorn
 pip install black flake8
+pip uninstall pydantic
+pip install pydantic
 ```
 
 ### 5. 依存関係の記録
