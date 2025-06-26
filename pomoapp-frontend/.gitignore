@@ -28,8 +28,3 @@ node_modules/
 dist/
 .vite/
 .vscode/
-.env
-__pycache__/
-.venv/
-*.pyc
-*.pyo
