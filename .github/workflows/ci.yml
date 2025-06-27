@@ -26,18 +26,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
-        run: |
-          echo "🔍 Running ESLint..."
-          npm run lint || (echo "❌ ESLint error detected" && exit 1)
-          echo "✅ ESLint passed with no issues"
+      # ESLint + reviewdog
+      - name: Run ESLint with reviewdog
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          eslint_flags: "."
+          workdir: pomoapp-frontend
 
-      - name: Run Prettier check
-        run: |
-          echo "🔍 Running Prettier check..."
-          npm run format:check || (echo "❌ Code style issues found by Prettier" && exit 1)
-          echo "✅ Prettier check passed with no issues"
+      # Prettier + reviewdog
+      - name: Run Prettier with reviewdog
+        uses: reviewdog/action-prettier@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          prettier_flags: "--check ."
+          workdir: pomoapp-frontend
 
+      # Vitest (そのまま)
       - name: Run Vitest
         run: |
           echo "🧪 Running tests with Vitest..."
