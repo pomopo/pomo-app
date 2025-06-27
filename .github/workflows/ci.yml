@@ -27,10 +27,19 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npm run lint
+        run: |
+          echo "🔍 Running ESLint..."
+          npm run lint || (echo "❌ ESLint error detected" && exit 1)
+          echo "✅ ESLint passed with no issues"
 
       - name: Run Prettier check
-        run: npm run format:check
+        run: |
+          echo "🔍 Running Prettier check..."
+          npm run format:check || (echo "❌ Code style issues found by Prettier" && exit 1)
+          echo "✅ Prettier check passed with no issues"
 
       - name: Run Vitest
-        run: npm run test
+        run: |
+          echo "🧪 Running tests with Vitest..."
+          npm run test || (echo "❌ Vitest failed" && exit 1)
+          echo "✅ All tests passed"
