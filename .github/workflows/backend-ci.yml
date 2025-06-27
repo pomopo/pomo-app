@@ -1,9 +1,11 @@
 name: Backend CI
 
+# ✅ 権限設定：このワークフローがPull Requestにコメントを投稿できるようにする
 permissions:
   contents: read
   pull-requests: write
 
+# ✅ トリガー設定：main または develop ブランチへの push / PR 作成・更新時に実行
 on:
   push:
     branches: [main, develop]
@@ -12,24 +14,31 @@ on:
 
 jobs:
   backend:
+    # ✅ 実行環境：Ubuntuの最新イメージ上でジョブを実行
     runs-on: ubuntu-latest
+
+    # ✅ すべてのrunコマンドは pomoapp-backend ディレクトリ内で実行
     defaults:
       run:
         working-directory: pomoapp-backend
 
     steps:
+      # ✅ リポジトリをチェックアウト（必須ステップ）
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # ✅ Python 3.10 をセットアップ
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
+      # ✅ Pythonの依存パッケージをインストール（requirements.txt に基づく）
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
+      # ✅ Black によるコード整形チェック（エラーがあってもCIは止めない）
       - name: Run black format check
         run: |
           echo "🔍 Running black..."
@@ -37,6 +46,7 @@ jobs:
         continue-on-error: true
         id: black
 
+      # ✅ Ruff によるLintチェック（エラーがあってもCIは止めない）
       - name: Run ruff lint
         run: |
           echo "🔍 Running ruff..."
@@ -44,6 +54,7 @@ jobs:
         continue-on-error: true
         id: ruff
 
+      # ✅ Pytestによる単体テスト（失敗時はCIをfailにする）
       - name: Run pytest
         run: |
           echo "🧪 Running tests with pytest..."
@@ -51,6 +62,7 @@ jobs:
           pytest > pytest.log 2>&1
         id: pytest
 
+      # ✅ Pull Request にCI結果の要約コメントを作成
       - name: Create PR comment body
         if: github.event_name == 'pull_request'
         run: |
@@ -77,6 +89,7 @@ jobs:
           head -n 100 pytest.log >> comment.md
           echo '```' >> comment.md
 
+      # ✅ 作成したコメントをPull Requestに投稿
       - name: Post comment to PR
         if: github.event_name == 'pull_request'
         uses: peter-evans/create-or-update-comment@v4
