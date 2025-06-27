@@ -1,0 +1,99 @@
+name: Backend CI
+
+# ✅ 権限設定：このワークフローがPull Requestにコメントを投稿できるようにする
+permissions:
+  contents: read
+  pull-requests: write
+
+# ✅ トリガー設定：main または develop ブランチへの push / PR 作成・更新時に実行
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  backend:
+    # ✅ 実行環境：Ubuntuの最新イメージ上でジョブを実行
+    runs-on: ubuntu-latest
+
+    # ✅ すべてのrunコマンドは pomoapp-backend ディレクトリ内で実行
+    defaults:
+      run:
+        working-directory: pomoapp-backend
+
+    steps:
+      # ✅ リポジトリをチェックアウト（必須ステップ）
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # ✅ Python 3.10 をセットアップ
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # ✅ Pythonの依存パッケージをインストール（requirements.txt に基づく）
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # ✅ Black によるコード整形チェック（エラーがあってもCIは止めない）
+      - name: Run black format check
+        run: |
+          echo "🔍 Running black..."
+          black --check app tests > black.log 2>&1
+        continue-on-error: true
+        id: black
+
+      # ✅ Ruff によるLintチェック（エラーがあってもCIは止めない）
+      - name: Run ruff lint
+        run: |
+          echo "🔍 Running ruff..."
+          ruff check app tests > ruff.log 2>&1
+        continue-on-error: true
+        id: ruff
+
+      # ✅ Pytestによる単体テスト（失敗時はCIをfailにする）
+      - name: Run pytest
+        run: |
+          echo "🧪 Running tests with pytest..."
+          export PYTHONPATH=.
+          pytest > pytest.log 2>&1
+        id: pytest
+
+      # ✅ Pull Request にCI結果の要約コメントを作成
+      - name: Create PR comment body
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "### 🛠️ Backend CI 実行結果" > comment.md
+          echo "- black: \`${{ steps.black.outcome }}\`" >> comment.md
+          echo "- ruff: \`${{ steps.ruff.outcome }}\`" >> comment.md
+          echo "- pytest: \`${{ steps.pytest.outcome }}\`" >> comment.md
+          echo "" >> comment.md
+
+          echo "#### 🎨 black 出力 (最大100行)" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 black.log >> comment.md
+          echo '```' >> comment.md
+          echo "" >> comment.md
+
+          echo "#### 🧹 ruff 出力 (最大100行)" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 ruff.log >> comment.md
+          echo '```' >> comment.md
+          echo "" >> comment.md
+
+          echo "#### 🧪 pytest 出力 (最大100行)" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 pytest.log >> comment.md
+          echo '```' >> comment.md
+
+      # ✅ 作成したコメントをPull Requestに投稿
+      - name: Post comment to PR
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: pomoapp-backend/comment.md

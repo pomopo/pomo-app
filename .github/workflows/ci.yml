@@ -1,41 +1,41 @@
-name: Frontend CI
+name: Frontend CI # このCIの名前を定義
 
 permissions:
-  contents: read
-  pull-requests: write
+  contents: read # リポジトリ内容の読み取り権限
+  pull-requests: write # PRにコメントを書き込むための権限
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop] # mainとdevelopブランチへのpushで実行
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop] # mainとdevelopブランチへのPR作成・更新で実行
 
 jobs:
   lint-format-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # 最新のUbuntu環境でジョブを実行
 
     defaults:
       run:
-        working-directory: pomoapp-frontend
+        working-directory: pomoapp-frontend # すべてのコマンドはこのディレクトリ内で実行
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3 # コードをチェックアウト
 
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 20 # Node.jsのバージョンを指定
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci # パッケージをクリーンインストール
 
       - name: Run ESLint
         run: |
           echo "🔍 Running ESLint..."
           npm run lint > eslint.log 2>&1
-        continue-on-error: true
-        id: eslint
+        continue-on-error: true # エラーが出ても処理を継続
+        id: eslint # 結果を参照するためのID
 
       - name: Run Prettier check
         run: |
@@ -52,7 +52,7 @@ jobs:
         id: vitest
 
       - name: Create PR comment body
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' # PRの場合のみ実行
         run: |
           echo "### 🛠️ CI 実行結果" > comment.md
           echo "- ESLint: \`${{ steps.eslint.outcome }}\`" >> comment.md
@@ -79,8 +79,8 @@ jobs:
 
       - name: Post comment to PR
         if: github.event_name == 'pull_request'
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v4 # PRにコメント投稿
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body-path: pomoapp-frontend/comment.md
+          token: ${{ secrets.GITHUB_TOKEN }} # GitHubの認証トークン
+          issue-number: ${{ github.event.pull_request.number }} # PR番号
+          body-path: pomoapp-frontend/comment.md # コメント本文のファイルパス
