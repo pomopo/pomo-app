@@ -1,0 +1,86 @@
+name: Backend CI
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: pomoapp-backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install black ruff pytest
+
+      - name: Run black format check
+        run: |
+          echo "🔍 Running black..."
+          black --check app tests > black.log 2>&1
+        continue-on-error: true
+        id: black
+
+      - name: Run ruff lint
+        run: |
+          echo "🔍 Running ruff..."
+          ruff app tests > ruff.log 2>&1
+        continue-on-error: true
+        id: ruff
+
+      - name: Run pytest
+        run: |
+          echo "🧪 Running tests with pytest..."
+          pytest > pytest.log 2>&1
+        continue-on-error: true
+        id: pytest
+
+      - name: Create PR comment body
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "### 🛠️ Backend CI 実行結果" > comment.md
+          echo "- black: \`${{ steps.black.outcome }}\`" >> comment.md
+          echo "- ruff: \`${{ steps.ruff.outcome }}\`" >> comment.md
+          echo "- pytest: \`${{ steps.pytest.outcome }}\`" >> comment.md
+          echo "" >> comment.md
+
+          echo "#### 🎨 black 出力 (最大100行)" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 black.log >> comment.md
+          echo '```' >> comment.md
+          echo "" >> comment.md
+
+          echo "#### 🧹 ruff 出力 (最大100行)" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 ruff.log >> comment.md
+          echo '```' >> comment.md
+          echo "" >> comment.md
+
+          echo "#### 🧪 pytest 出力 (最大100行)" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 pytest.log >> comment.md
+          echo '```' >> comment.md
+
+      - name: Post comment to PR
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: pomoapp-backend/comment.md
