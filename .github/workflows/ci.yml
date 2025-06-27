@@ -15,80 +15,100 @@ jobs:
         working-directory: pomoapp-frontend
 
     steps:
-      - name: 📦 リポジトリをチェックアウト
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🧰 Node.js をセットアップ
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: 📦 依存パッケージをインストール
+      - name: Install dependencies
         run: npm ci
 
-      - name: ✅ ESLint を実行
+      - name: Run ESLint
         run: |
           echo "🔍 Running ESLint..."
           npm run lint > eslint.log 2>&1
         continue-on-error: true
         id: eslint
 
-      - name: ✅ Prettier チェックを実行
+      - name: Run Prettier check
         run: |
           echo "🔍 Running Prettier check..."
           npm run format:check > prettier.log 2>&1
         continue-on-error: true
         id: prettier
 
-      - name: ✅ Vitest を実行
+      - name: Run Vitest
         run: |
           echo "🧪 Running tests with Vitest..."
           npm run test > vitest.log 2>&1
         continue-on-error: true
         id: vitest
 
-      - name: 📝 PR コメント内容を作成
+      - name: Create PR comment body
         if: github.event_name == 'pull_request'
         run: |
-          echo "## ✅ チェック結果のまとめ" > comment.md
-          echo "" >> comment.md
-          echo "| チェック項目 | 結果 |" >> comment.md
-          echo "|--------------|--------|" >> comment.md
-          echo "| ESLint       | \`${{ steps.eslint.outcome }}\` |" >> comment.md
-          echo "| Prettier     | \`${{ steps.prettier.outcome }}\` |" >> comment.md
-          echo "| Vitest       | \`${{ steps.vitest.outcome }}\` |" >> comment.md
-          echo "" >> comment.md
-          echo "それぞれの出力結果（最大100行）を以下にまとめています。" >> comment.md
+          echo "### 🛠️ CI 実行結果" > comment.md
+          echo "- ESLint: \`${{ steps.eslint.outcome }}\`" >> comment.md
+          echo "- Prettier: \`${{ steps.prettier.outcome }}\`" >> comment.md
+          echo "- Vitest: \`${{ steps.vitest.outcome }}\`" >> comment.md
           echo "" >> comment.md
 
-          echo "<details><summary>🔍 ESLint 出力を見る</summary>" >> comment.md
-          echo "" >> comment.md
+          echo "#### 📝 ESLint 出力 (最大100行)" >> comment.md
           echo '```' >> comment.md
           head -n 100 eslint.log >> comment.md
           echo '```' >> comment.md
-          echo "</details>" >> comment.md
-          echo "" >> comment.md
 
-          echo "<details><summary>🧹 Prettier 出力を見る</summary>" >> comment.md
           echo "" >> comment.md
+          echo "#### 📝 Prettier 出力 (最大100行)" >> comment.md
           echo '```' >> comment.md
           head -n 100 prettier.log >> comment.md
           echo '```' >> comment.md
-          echo "</details>" >> comment.md
-          echo "" >> comment.md
 
-          echo "<details><summary>🧪 Vitest 出力を見る</summary>" >> comment.md
           echo "" >> comment.md
+          echo "#### 🧪 Vitest 出力 (最大100行)" >> comment.md
           echo '```' >> comment.md
           head -n 100 vitest.log >> comment.md
           echo '```' >> comment.md
-          echo "</details>" >> comment.md
 
-      - name: 💬 PR にコメントを投稿
+      - name: Post PR comment
         if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "📝 投稿するコメント:"
-          cat comment.md
-          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md || echo "⚠️ コメント投稿に失敗しました"
+          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md || echo "⚠️ gh CLI failed to comment"
+      - name: Create PR comment body
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "### 🛠️ Frontend CI 実行結果" > pomoapp-frontend/comment.md
+          echo "- ESLint: \`${{ steps.eslint.outcome }}\`" >> pomoapp-frontend/comment.md
+          echo "- Prettier: \`${{ steps.prettier.outcome }}\`" >> pomoapp-frontend/comment.md
+          echo "- Vitest: \`${{ steps.vitest.outcome }}\`" >> pomoapp-frontend/comment.md
+          echo "" >> pomoapp-frontend/comment.md
+
+          echo "#### 📝 ESLint 出力" >> pomoapp-frontend/comment.md
+          echo '```' >> pomoapp-frontend/comment.md
+          head -n 100 pomoapp-frontend/eslint.log >> pomoapp-frontend/comment.md
+          echo '```' >> pomoapp-frontend/comment.md
+          echo "" >> pomoapp-frontend/comment.md
+
+          echo "#### 📝 Prettier 出力" >> pomoapp-frontend/comment.md
+          echo '```' >> pomoapp-frontend/comment.md
+          head -n 100 pomoapp-frontend/prettier.log >> pomoapp-frontend/comment.md
+          echo '```' >> pomoapp-frontend/comment.md
+          echo "" >> pomoapp-frontend/comment.md
+
+          echo "#### 🧪 Vitest 出力" >> pomoapp-frontend/comment.md
+          echo '```' >> pomoapp-frontend/comment.md
+          head -n 100 pomoapp-frontend/vitest.log >> pomoapp-frontend/comment.md
+          echo '```' >> pomoapp-frontend/comment.md
+
+      - name: Post comment to PR
+        if: github.event_name == 'pull_request'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: pomoapp-frontend/comment.md
