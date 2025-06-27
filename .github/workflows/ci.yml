@@ -82,28 +82,28 @@ jobs:
       - name: Create PR comment body
         if: github.event_name == 'pull_request'
         run: |
-          echo "### 🛠️ Frontend CI 実行結果" > pomoapp-frontend/comment.md
-          echo "- ESLint: \`${{ steps.eslint.outcome }}\`" >> pomoapp-frontend/comment.md
-          echo "- Prettier: \`${{ steps.prettier.outcome }}\`" >> pomoapp-frontend/comment.md
-          echo "- Vitest: \`${{ steps.vitest.outcome }}\`" >> pomoapp-frontend/comment.md
-          echo "" >> pomoapp-frontend/comment.md
+          echo "### 🛠️ Frontend CI 実行結果" > comment.md
+          echo "- ESLint: \`${{ steps.eslint.outcome }}\`" >> comment.md
+          echo "- Prettier: \`${{ steps.prettier.outcome }}\`" >> comment.md
+          echo "- Vitest: \`${{ steps.vitest.outcome }}\`" >> comment.md
+          echo "" >> comment.md
 
-          echo "#### 📝 ESLint 出力" >> pomoapp-frontend/comment.md
-          echo '```' >> pomoapp-frontend/comment.md
-          head -n 100 pomoapp-frontend/eslint.log >> pomoapp-frontend/comment.md
-          echo '```' >> pomoapp-frontend/comment.md
-          echo "" >> pomoapp-frontend/comment.md
+          echo "#### 📝 ESLint 出力" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 eslint.log >> comment.md
+          echo '```' >> comment.md
+          echo "" >> comment.md
 
-          echo "#### 📝 Prettier 出力" >> pomoapp-frontend/comment.md
-          echo '```' >> pomoapp-frontend/comment.md
-          head -n 100 pomoapp-frontend/prettier.log >> pomoapp-frontend/comment.md
-          echo '```' >> pomoapp-frontend/comment.md
-          echo "" >> pomoapp-frontend/comment.md
+          echo "#### 📝 Prettier 出力" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 prettier.log >> comment.md
+          echo '```' >> comment.md
+          echo "" >> comment.md
 
-          echo "#### 🧪 Vitest 出力" >> pomoapp-frontend/comment.md
-          echo '```' >> pomoapp-frontend/comment.md
-          head -n 100 pomoapp-frontend/vitest.log >> pomoapp-frontend/comment.md
-          echo '```' >> pomoapp-frontend/comment.md
+          echo "#### 🧪 Vitest 出力" >> comment.md
+          echo '```' >> comment.md
+          head -n 100 vitest.log >> comment.md
+          echo '```' >> comment.md
 
       - name: Post comment to PR
         if: github.event_name == 'pull_request'
