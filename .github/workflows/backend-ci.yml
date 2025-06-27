@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install black ruff pytest
+          pip install -r requirements.txt
 
       - name: Run black format check
         run: |
@@ -40,15 +40,15 @@ jobs:
       - name: Run ruff lint
         run: |
           echo "🔍 Running ruff..."
-          ruff app tests > ruff.log 2>&1
+          ruff check app tests > ruff.log 2>&1
         continue-on-error: true
         id: ruff
 
       - name: Run pytest
         run: |
           echo "🧪 Running tests with pytest..."
+          export PYTHONPATH=.
           pytest > pytest.log 2>&1
-        continue-on-error: true
         id: pytest
 
       - name: Create PR comment body
