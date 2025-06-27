@@ -1,5 +1,9 @@
 name: Frontend CI
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   push:
     branches: [main]
@@ -60,47 +64,15 @@ jobs:
           echo '```' >> comment.md
           head -n 100 eslint.log >> comment.md
           echo '```' >> comment.md
-
           echo "" >> comment.md
+
           echo "#### 📝 Prettier 出力 (最大100行)" >> comment.md
           echo '```' >> comment.md
           head -n 100 prettier.log >> comment.md
           echo '```' >> comment.md
-
           echo "" >> comment.md
+
           echo "#### 🧪 Vitest 出力 (最大100行)" >> comment.md
-          echo '```' >> comment.md
-          head -n 100 vitest.log >> comment.md
-          echo '```' >> comment.md
-
-      - name: Post PR comment
-        if: github.event_name == 'pull_request'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md || echo "⚠️ gh CLI failed to comment"
-      - name: Create PR comment body
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "### 🛠️ Frontend CI 実行結果" > comment.md
-          echo "- ESLint: \`${{ steps.eslint.outcome }}\`" >> comment.md
-          echo "- Prettier: \`${{ steps.prettier.outcome }}\`" >> comment.md
-          echo "- Vitest: \`${{ steps.vitest.outcome }}\`" >> comment.md
-          echo "" >> comment.md
-
-          echo "#### 📝 ESLint 出力" >> comment.md
-          echo '```' >> comment.md
-          head -n 100 eslint.log >> comment.md
-          echo '```' >> comment.md
-          echo "" >> comment.md
-
-          echo "#### 📝 Prettier 出力" >> comment.md
-          echo '```' >> comment.md
-          head -n 100 prettier.log >> comment.md
-          echo '```' >> comment.md
-          echo "" >> comment.md
-
-          echo "#### 🧪 Vitest 出力" >> comment.md
           echo '```' >> comment.md
           head -n 100 vitest.log >> comment.md
           echo '```' >> comment.md
@@ -111,4 +83,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
-          body-path: pomoapp-frontend/comment.md
+          body-path: comment.md
