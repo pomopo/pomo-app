@@ -15,67 +15,80 @@ jobs:
         working-directory: pomoapp-frontend
 
     steps:
-      - name: Checkout repository
+      - name: 📦 リポジトリをチェックアウト
         uses: actions/checkout@v3
 
-      - name: Use Node.js
+      - name: 🧰 Node.js をセットアップ
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: 📦 依存パッケージをインストール
         run: npm ci
 
-      - name: Run ESLint
+      - name: ✅ ESLint を実行
         run: |
           echo "🔍 Running ESLint..."
           npm run lint > eslint.log 2>&1
         continue-on-error: true
         id: eslint
 
-      - name: Run Prettier check
+      - name: ✅ Prettier チェックを実行
         run: |
           echo "🔍 Running Prettier check..."
           npm run format:check > prettier.log 2>&1
         continue-on-error: true
         id: prettier
 
-      - name: Run Vitest
+      - name: ✅ Vitest を実行
         run: |
           echo "🧪 Running tests with Vitest..."
           npm run test > vitest.log 2>&1
         continue-on-error: true
         id: vitest
 
-      - name: Create PR comment body
+      - name: 📝 PR コメント内容を作成
         if: github.event_name == 'pull_request'
         run: |
-          echo "### 🛠️ CI 実行結果" > comment.md
-          echo "- ESLint: \`${{ steps.eslint.outcome }}\`" >> comment.md
-          echo "- Prettier: \`${{ steps.prettier.outcome }}\`" >> comment.md
-          echo "- Vitest: \`${{ steps.vitest.outcome }}\`" >> comment.md
+          echo "## ✅ チェック結果のまとめ" > comment.md
+          echo "" >> comment.md
+          echo "| チェック項目 | 結果 |" >> comment.md
+          echo "|--------------|--------|" >> comment.md
+          echo "| ESLint       | \`${{ steps.eslint.outcome }}\` |" >> comment.md
+          echo "| Prettier     | \`${{ steps.prettier.outcome }}\` |" >> comment.md
+          echo "| Vitest       | \`${{ steps.vitest.outcome }}\` |" >> comment.md
+          echo "" >> comment.md
+          echo "それぞれの出力結果（最大100行）を以下にまとめています。" >> comment.md
           echo "" >> comment.md
 
-          echo "#### 📝 ESLint 出力 (最大100行)" >> comment.md
+          echo "<details><summary>🔍 ESLint 出力を見る</summary>" >> comment.md
+          echo "" >> comment.md
           echo '```' >> comment.md
           head -n 100 eslint.log >> comment.md
           echo '```' >> comment.md
-
+          echo "</details>" >> comment.md
           echo "" >> comment.md
-          echo "#### 📝 Prettier 出力 (最大100行)" >> comment.md
+
+          echo "<details><summary>🧹 Prettier 出力を見る</summary>" >> comment.md
+          echo "" >> comment.md
           echo '```' >> comment.md
           head -n 100 prettier.log >> comment.md
           echo '```' >> comment.md
-
+          echo "</details>" >> comment.md
           echo "" >> comment.md
-          echo "#### 🧪 Vitest 出力 (最大100行)" >> comment.md
+
+          echo "<details><summary>🧪 Vitest 出力を見る</summary>" >> comment.md
+          echo "" >> comment.md
           echo '```' >> comment.md
           head -n 100 vitest.log >> comment.md
           echo '```' >> comment.md
+          echo "</details>" >> comment.md
 
-      - name: Post PR comment
+      - name: 💬 PR にコメントを投稿
         if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md || echo "⚠️ gh CLI failed to comment"
+          echo "📝 投稿するコメント:"
+          cat comment.md
+          gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md || echo "⚠️ コメント投稿に失敗しました"
