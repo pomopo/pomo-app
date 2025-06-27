@@ -10,6 +10,10 @@ jobs:
   lint-format-test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: pomoapp-frontend
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
