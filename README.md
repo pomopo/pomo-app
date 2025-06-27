@@ -2,7 +2,8 @@
 
 このガイドは、GitHub の `pomo-app` リポジトリをクローンして開発環境を構築する手順を説明します。
 
-![CI](https://github.com/hmasami/pomo-app.git/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/hmasami/pomo-app/actions/workflows/ci.yml/badge.svg)](https://github.com/hmasami/pomo-app/actions/workflows/ci.yml)
+
 
 ---
 
