@@ -2,16 +2,18 @@
 
 このガイドは、GitHub の `pomo-app` リポジトリをクローンして開発環境を構築する手順を説明します。
 
+![CI](https://github.com/hmasami/pomo-app.git/actions/workflows/ci.yml/badge.svg)
+
 ---
 
 ## 下準備
 
 開発環境には以下が必要です：
 
-* Git
-* Node.js (v18+)
-* Python (3.9+)
-* GitHub アカウント
+- Git
+- Node.js (v18+)
+- Python (3.9+)
+- GitHub アカウント
 
 ---
 
@@ -34,7 +36,7 @@ git clone https://github.com/hmasami/pomo-app.git
 
 ### 3. クローン後の構成
 
-Windows勢はCドライブ直下に`projects`的なフォルダ作ってくろんしてください
+Windows 勢は C ドライブ直下に`projects`的なフォルダ作ってくろんしてください
 
 ```
 pomo-app/
@@ -97,13 +99,17 @@ python -m venv .venv
 ### 3. 仮想環境の有効化
 
 - Windows:
+
 ```
 .venv\Scripts\activate
 ```
+
 - macOS/Linux:
+
 ```
 source .venv/bin/activate
 ```
+
 ### 4. 必要パッケージのインストール
 
 ```
@@ -119,9 +125,9 @@ pip install pydantic
 pip freeze > requirements.txt
 ```
 
-### 6. 動作確認用APIの作成
+### 6. 動作確認用 API の作成
 
-backendフォルダ直下に`main.py`を作成
+backend フォルダ直下に`main.py`を作成
 main.py を以下の内容で作成：
 
 ```python
@@ -143,4 +149,3 @@ uvicorn main:app --reload
 ### 8. 確認
 
 ブラウザで http://127.0.0.1:8000 を開き、{"message": "Hello from backend!"} が表示されれば成功です。
-
