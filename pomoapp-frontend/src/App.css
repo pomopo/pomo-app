@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -87,7 +88,7 @@ body, html {
 
 .login-form button {
   padding: 10px;
-  background: #4CAF50;
+  background: #4caf50;
   border: none;
   color: white;
   border-radius: 4px;

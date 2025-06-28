@@ -29,9 +29,10 @@ const Login = () => {
         setErrorMessage(data.detail || 'ログイン失敗');
       }
     } catch (err) {
-      setShowDanger(true);
-      setErrorMessage('ネットワークエラー');
-    }
+  console.error(err); // ログ出力（開発中に便利）
+  setShowDanger(true);
+  setErrorMessage('ネットワークエラー');
+}
   };
 
   return (

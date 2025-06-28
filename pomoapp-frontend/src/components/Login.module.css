@@ -20,10 +20,12 @@
 
 /* 👇 これを追加（hover時にふわっと光る） */
 .form:hover {
-  box-shadow: 0 0 25px #0f0, 0 0 50px #0f0, 0 0 75px #0f0;
+  box-shadow:
+    0 0 25px #0f0,
+    0 0 50px #0f0,
+    0 0 75px #0f0;
   transform: translateY(-4px) scale(1.02);
 }
-
 
 .title {
   color: #0f0;
@@ -99,15 +101,18 @@
 .form.errorMode .title,
 .form.errorMode .input,
 .form.errorMode .icon {
-   color: #0f0;
+  color: #0f0;
 }
 
 @keyframes pulseViolet {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 12px #e0bbff;
   }
   50% {
-    box-shadow: 0 0 24px #e0bbff, 0 0 40px #5a189a;
+    box-shadow:
+      0 0 24px #e0bbff,
+      0 0 40px #5a189a;
   }
 }
 
