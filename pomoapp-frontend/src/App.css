@@ -1,42 +1,95 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.container {
+  display: flex;
+  height: 100vh;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bear {
+  background: #ffdfb0;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.face {
+  background: #8b4c1c;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  position: relative;
 }
 
-.card {
-  padding: 2em;
+.eyes {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  display: flex;
+  gap: 40px;
 }
 
-.read-the-docs {
-  color: #888;
+.eye {
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.pupil {
+  width: 14px;
+  height: 14px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  transition: transform 0.1s linear;
+}
+
+.nose {
+  width: 30px;
+  height: 20px;
+  background: #3b2a1a;
+  position: absolute;
+  bottom: 30px;
+  left: 60px;
+  border-radius: 50% / 40%;
+}
+
+.login-form {
+  background: #222;
+  color: white;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 40px;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+}
+
+.login-form input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+.login-form button {
+  padding: 10px;
+  background: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
 }

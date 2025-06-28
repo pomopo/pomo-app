@@ -1,6 +1,6 @@
 // src/components/MyComponent.test.tsx
 import { render, screen } from '@testing-library/react';
-import MyComponent from './MyComponent';
+import MyComponent from './Login';
 
 describe('MyComponent', () => {
   it('renders correctly', () => {
