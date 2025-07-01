@@ -2,11 +2,11 @@
 
 このガイドは、GitHub の `pomo-app` リポジトリをクローンして開発環境を構築する手順を説明します。
 
-### フロントエンドのGithubActions
+### フロントエンドの GithubActions
 
 [![CI](https://github.com/hmasami/pomo-app/actions/workflows/ci.yml/badge.svg)](https://github.com/hmasami/pomo-app/actions/workflows/ci.yml)
 
-### バックエンドのGithubActions
+### バックエンドの GithubActions
 
 [![Backend CI](https://github.com/hmasami/pomo-app/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/hmasami/pomo-app/actions/workflows/backend-ci.yml)
 
@@ -123,6 +123,7 @@ pip install fastapi uvicorn
 pip install black flake8
 pip uninstall pydantic
 pip install pydantic
+pip install python-dotenv
 ```
 
 ### 5. 依存関係の記録
@@ -130,6 +131,8 @@ pip install pydantic
 ```
 pip freeze > requirements.txt
 ```
+
+後で削除しても良い
 
 ### 6. 動作確認用 API の作成
 
@@ -149,6 +152,7 @@ def read_root():
 ### 7. サーバー起動
 
 ```
+cd app
 uvicorn main:app --reload
 ```
 

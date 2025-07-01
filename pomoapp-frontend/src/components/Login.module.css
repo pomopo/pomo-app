@@ -1,0 +1,135 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: url('/assets/stars-bg.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  background-color: #111;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px #0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+/* 👇 これを追加（hover時にふわっと光る） */
+.form:hover {
+  box-shadow:
+    0 0 25px #0f0,
+    0 0 50px #0f0,
+    0 0 75px #0f0;
+  transform: translateY(-4px) scale(1.02);
+}
+
+.title {
+  color: #0f0;
+  margin-bottom: 20px;
+  font-size: 24px;
+  letter-spacing: 4px;
+}
+
+.input {
+  background: #000;
+  border: 2px solid #0f0;
+  padding: 10px 15px;
+  margin: 10px 0;
+  color: #0f0;
+  font-size: 16px;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  box-shadow: 0 0 10px #0f0;
+}
+
+.button {
+  background: transparent;
+  border: 2px solid #0f0;
+  padding: 10px 20px;
+  color: #0f0;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background: #0f0;
+  color: #000;
+  box-shadow: 0 0 15px #0f0;
+}
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  border: 2px solid #0f0;
+  border-radius: 8px;
+  margin: 5px 0;
+  background: #000;
+  padding: 5px;
+  width: 100%;
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 15px;
+  color: #0f0;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #0f0;
+  flex: 1;
+  font-size: 13px;
+}
+.form.errorMode {
+  background-color: #4b0082; /* ソフトパープル */
+  box-shadow: 0 0 30px #ff00cc;
+  animation: pulseViolet 2s infinite;
+}
+
+.form.errorMode .title,
+.form.errorMode .input,
+.form.errorMode .icon {
+  color: #0f0;
+}
+
+@keyframes pulseViolet {
+  0%,
+  100% {
+    box-shadow: 0 0 12px #e0bbff;
+  }
+  50% {
+    box-shadow:
+      0 0 24px #e0bbff,
+      0 0 40px #5a189a;
+  }
+}
+
+.errorText {
+  color: #ff4dd2;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
