@@ -123,7 +123,7 @@ pip install fastapi uvicorn
 pip install black flake8
 pip uninstall pydantic
 pip install pydantic
-pip install dotenv
+pip install python-dotenv
 ```
 
 ### 5. 依存関係の記録
