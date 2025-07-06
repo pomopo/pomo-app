@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  background-color: #000000;
+  font-family: 'Courier New', monospace;
+  color: #39ff14;
+}
+
+.dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+}
+
+.title {
+  font-size: 48px;
+  color: #39ff14;
+  text-shadow:
+    0 0 10px #39ff14,
+    0 0 20px #39ff14;
+  margin-bottom: 20px;
+}
+
+.timer {
+  font-size: 32px;
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+}
