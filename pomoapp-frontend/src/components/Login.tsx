@@ -12,26 +12,29 @@ const Login = () => {
   const navigate = useNavigate();
 
   // フォームが送信されたときに実行される処理
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); // ページリロードを防ぐ（フォームのデフォ動作を止める）
 
     try {
-      // ログインAPIにPOSTリクエストを送信（入力データをJSON形式で送る）
-      const res = await fetch('http://localhost:8000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (res.ok) {
+      if(username === 'pomo' && password === 'pomo') {
         setShowDanger(false);
         setErrorMessage('');
         navigate('/dashboard');
       } else {
         // 失敗：エラーメッセージを表示
-        const data = await res.json();
-        setShowDanger(true);
-        setErrorMessage(data.detail || 'ログイン失敗');
+        if(username === '' || password === '') {
+          setShowDanger(true);
+          setErrorMessage('ユーザー名とパスワードは必須です');
+        } else if (username === 'pomo' || password !== 'pomo') {
+          setShowDanger(true);
+          setErrorMessage('パスワードが間違っています');
+        } else if (username !== 'pomo' || password === 'pomo') {
+          setShowDanger(true);
+          setErrorMessage('IDが間違っています');
+        } else {
+          setShowDanger(true);
+          setErrorMessage('ログインに失敗しました');
+        }
       }
     } catch (err) {
       // ネットワークエラーなどで例外が発生したとき
