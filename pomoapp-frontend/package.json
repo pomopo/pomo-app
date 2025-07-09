@@ -1,5 +1,6 @@
 {
   "name": "pomoapp-frontend",
+  "homepage": "https://pomopo.github.io/pomo-app/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
