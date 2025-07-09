@@ -1,0 +1,20 @@
+/* src/components/Header.css */
+.header {
+  background-color: #111;
+  color: #0f0;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 5px #0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 100%;
+  border-bottom: 2px solid #0f0; /* 線を明示的に指定 */
+  box-sizing: border-box;
+}
+
+.logo {
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px #0f0;
+}
