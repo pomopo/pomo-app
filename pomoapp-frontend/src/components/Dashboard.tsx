@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Dashboard.css'; // 外部CSSでスタイル適用
 
 const Dashboard = () => {
