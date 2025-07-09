@@ -1,12 +1,19 @@
-import React from 'react';
-import Login from './components/Login';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <Login />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* ログインはフルスクリーンで単体表示 */}
+        <Route path="/" element={<Login />} />
+
+        {/* ダッシュボード用ルート */}
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
