@@ -1,4 +1,4 @@
-// src/components/Login.test.tsx
+// src/pages/Login.test.tsx
 import { render, screen } from '@testing-library/react';
 import Login from './Login';
 

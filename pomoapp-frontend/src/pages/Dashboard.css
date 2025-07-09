@@ -3,15 +3,34 @@ body {
   background-color: #000000;
   font-family: 'Courier New', monospace;
   color: #39ff14;
+
+  /* 必要なら以下を追加して余白を完全に防止 */
+  overflow-x: hidden;
 }
 
-.dashboard {
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
   height: 100vh;
+  background-color: black;
+  color: #0f0;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  background-color: #000000;
+  align-items: flex-start;
+  padding: 2rem;
 }
 
 .title {
