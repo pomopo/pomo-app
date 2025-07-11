@@ -44,4 +44,5 @@ async def receive_word(request: WordRequest):
     print(f"受信した単語: {request.word}")
     print(f"Geminiの応答: {answer}")
     time.sleep(3)
-    return {"message": answer}
+    #return {"message": answer}
+    return {"message": "りんご みかん ぶどう ばなな もも なし いちご さくらんぼ ぶどう みかん りんご みかん ぶどう ばなな もも なし いちご さくらんぼ"}

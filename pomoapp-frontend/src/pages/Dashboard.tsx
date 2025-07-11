@@ -17,7 +17,7 @@ const Dashboard = () => {
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const day = String(now.getDate()).padStart(2, '0');
       const weekdayJp = now.toLocaleDateString('ja-JP', { weekday: 'long' });
-      const time = now.toTimeString().split(' ')[0]; // hh:mm:ss
+      const time = now.toTimeString().split(' ')[0];
 
       const weekdayMap: Record<string, string> = {
         日曜日: 'sun',
@@ -45,9 +45,7 @@ const Dashboard = () => {
     try {
       const response = await fetch('http://localhost:8000/api/word', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ word }),
       });
 
@@ -61,19 +59,53 @@ const Dashboard = () => {
     setWord('');
   };
 
+  const renderFallingWords = () => {
+    if (!responseMessage) return null;
+
+    const words = responseMessage.split(/[\s、。．,、]+/);
+    const instances = 10;
+    const fallingWords = [];
+
+    for (let i = 0; i < instances; i++) {
+      for (let j = 0; j < words.length; j++) {
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        const delay = Math.random() * 20;
+
+        fallingWords.push(
+          <div
+            key={`${i}-${j}`}
+            className="falling-word"
+            style={{
+              top: `${top}%`,
+              left: `${left}%`,
+              animationDelay: `${delay}s`,
+            }}
+          >
+            {words[j]}
+          </div>
+        );
+      }
+    }
+
+    return <div className="falling-layer">{fallingWords}</div>;
+  };
+
   return (
     <div className="container">
       <Sidebar />
       <div className="main">
         <Header />
         <div className="dashboard-content center">
+          {renderFallingWords()}
+
           <h2 className="title">DASHBOARD</h2>
 
-          {/* 英字クラス名を使って色分け */}
           <div className={`timer large ${weekdayClass}-color`}>
             <div>{dateStr}</div>
             <div>{timeStr}</div>
           </div>
+
           <form className="word-form" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -86,6 +118,7 @@ const Dashboard = () => {
               送信
             </button>
           </form>
+
           {responseMessage && (
             <div className="response-box">
               <p className="response-text">{responseMessage}</p>
