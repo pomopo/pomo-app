@@ -24,13 +24,59 @@ body {
   flex-direction: column;
 }
 
-.dashboard-content {
+.dashboard-content.center {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 2rem;
+}
+
+.timer.large {
+  font-size: 54px;
+  color: #39ff14;
+  text-shadow: 0 0 10px #39ff14;
+  margin: 2rem 0;
+}
+
+.word-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.word-input {
+  background-color: black;
+  border: 2px solid #39ff14;
+  padding: 0.5rem 1rem;
+  color: #39ff14;
+  font-size: 20px;
+  font-family: 'Courier New', monospace;
+  outline: none;
+  box-shadow: 0 0 10px #39ff14;
+  border-radius: 4px;
+}
+
+.submit-button {
+  background-color: black;
+  color: #39ff14;
+  border: 2px solid #39ff14;
+  padding: 0.5rem 1.5rem;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 10px #39ff14;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.submit-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #39ff14;
 }
 
 .title {
@@ -46,4 +92,128 @@ body {
   font-size: 32px;
   color: #39ff14;
   text-shadow: 0 0 5px #39ff14;
+}
+
+.word-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.word-input {
+  background-color: black;
+  border: 2px solid #39ff14;
+  padding: 0.5rem 1rem;
+  color: #39ff14;
+  font-size: 20px;
+  font-family: 'Courier New', monospace;
+  outline: none;
+  box-shadow: 0 0 10px #39ff14;
+  border-radius: 4px;
+}
+
+.submit-button {
+  background-color: black;
+  color: #39ff14;
+  border: 2px solid #39ff14;
+  padding: 0.5rem 1.5rem;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 10px #39ff14;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.submit-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #39ff14;
+}
+/* 共通 */
+.timer.large {
+  font-size: 64px;
+  text-shadow: 0 0 10px currentColor;
+  margin: 2rem 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* 曜日別カラー：トップレベルで定義すること！ */
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 20px currentColor;
+  }
+  50% {
+    opacity: 0.4;
+    text-shadow: 0 0 5px currentColor;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+/* 日曜*/
+.sun-color {
+  color: #ff1e1e !important;
+  animation: flicker 1s infinite;
+}
+
+/* 月曜*/
+.mon-color {
+  color: #39ff14 !important;
+  animation: flicker 1.2s infinite;
+}
+
+/* 火曜 */
+.tue-color {
+  color: #ff69b4 !important;
+  animation: pulse 2s infinite;
+}
+
+/* 水曜 */
+.wed-color {
+  color: #7700ff !important;
+  animation: wave 1.5s infinite;
+}
+
+/* 木曜 */
+.thu-color {
+  color: #ff7f00 !important;
+  animation: wave 1.5s infinite;
+}
+
+/* 金曜 */
+.fri-color {
+  color: #da70d6 !important;
+  animation:
+    flicker 2s infinite,
+    pulse 2s infinite;
+}
+
+/* 土曜 */
+.sat-color {
+  color: #00bfff !important;
+  opacity: 0.8;
+  animation: pulse 4s infinite ease-in-out;
 }
