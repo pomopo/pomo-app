@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [timeStr, setTimeStr] = useState('');
   const [weekdayClass, setWeekdayClass] = useState('');
   const [word, setWord] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -52,6 +53,7 @@ const Dashboard = () => {
 
       const data = await response.json();
       console.log('サーバーからの応答:', data.message);
+      setResponseMessage(data.message);
     } catch (err) {
       console.error('送信エラー:', err);
     }
@@ -84,6 +86,11 @@ const Dashboard = () => {
               送信
             </button>
           </form>
+          {responseMessage && (
+            <div className="response-box">
+              <p className="response-text">{responseMessage}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
