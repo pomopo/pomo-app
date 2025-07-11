@@ -1,8 +1,9 @@
+# app/api/routes.py
+
 from fastapi import APIRouter
+from . import dashboard
 
 router = APIRouter()
 
-
-@router.get("/")
-def root():
-    return {"message": "Hello from structured FastAPI!"}
+# 各モジュールのrouterを統合
+router.include_router(dashboard.router)

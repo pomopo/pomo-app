@@ -38,9 +38,24 @@ const Dashboard = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('送信された単語:', word);
+
+    try {
+      const response = await fetch('http://localhost:8000/api/word', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ word }),
+      });
+
+      const data = await response.json();
+      console.log('サーバーからの応答:', data.message);
+    } catch (err) {
+      console.error('送信エラー:', err);
+    }
+
     setWord('');
   };
 
