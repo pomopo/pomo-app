@@ -1,13 +1,15 @@
+from dotenv import load_dotenv
+from pathlib import Path
+
+env_path = Path(__file__).resolve().parent.parent / ".env"  # .envへの絶対パス
+load_dotenv(dotenv_path=env_path)
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
 import os
 
-from app.api.routes import router as api_router  # ← 追加
-
-load_dotenv()
-
+from app.api.routes import router as api_router
 app = FastAPI()
 
 frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://localhost:5173")
