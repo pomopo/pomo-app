@@ -13,8 +13,10 @@ router = APIRouter()
 # 環境変数からAPIキーを取得
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-print("DEBUG: 現在のディレクトリ:", os.getcwd())
-print("DEBUG: GOOGLE_API_KEY:", os.getenv("GOOGLE_API_KEY"))
+# プロンプトテンプレートを読み込む
+PROMPT_TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "prompt.txt")
+with open(PROMPT_TEMPLATE_PATH, "r", encoding="utf-8") as f:
+    PROMPT_TEMPLATE = f.read()
 
 # Gemini APIに接続設定
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -24,7 +26,7 @@ class WordRequest(BaseModel):
 
 @router.post("/word")
 async def receive_word(request: WordRequest):
-    prompt = f"以下の単語について10文字以下の単語で面白く返して: {request.word}"
+    prompt = PROMPT_TEMPLATE.format(word=request.word)
     print("GOOGLE_API_KEY:", GOOGLE_API_KEY)
 
     try:
@@ -42,4 +44,5 @@ async def receive_word(request: WordRequest):
     print(f"受信した単語: {request.word}")
     print(f"Geminiの応答: {answer}")
     time.sleep(3)
-    return {"message": answer}
+    #return {"message": answer}
+    return {"message": "りんご みかん ぶどう ばなな もも なし いちご さくらんぼ ぶどう みかん りんご みかん ぶどう ばなな もも なし いちご さくらんぼ"}

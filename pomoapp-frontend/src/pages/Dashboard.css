@@ -217,3 +217,40 @@ body {
   opacity: 0.8;
   animation: pulse 4s infinite ease-in-out;
 }
+
+.falling-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.falling-word {
+  position: absolute;
+  top: -2em; /* 上からスタート */
+  font-size: 24px;
+  font-family: 'Courier New', monospace;
+  color: #39ff14;
+  text-shadow: 0 0 8px #39ff14;
+  white-space: nowrap;
+  user-select: none;
+  animation-name: fallWord;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fallWord {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0;
+  }
+}
