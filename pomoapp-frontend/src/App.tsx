@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard';
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/pomo-app">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
