@@ -1,0 +1,12 @@
+# Python用.gitignore
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+.DS_Store
+node_modules/
+dist/
+.vite/
+.vscode/*.pyc
+*.pyo
