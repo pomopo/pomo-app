@@ -6,11 +6,13 @@
   height: 100vh;
   padding: 1rem;
   box-shadow: 2px 0 5px #0f0;
+  box-sizing: border-box;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar li {
@@ -19,4 +21,43 @@
   text-shadow: 0 0 5px #0f0;
   font-size: 1.3rem;
   margin-bottom: 1.5rem;
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+
+  .sidebar ul {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sidebar li {
+    margin-bottom: 0;
+    font-size: 1.1rem;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 0.5rem;
+  }
+
+  .sidebar ul {
+    gap: 1rem;
+  }
+
+  .sidebar li {
+    font-size: 1rem;
+  }
 }

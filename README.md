@@ -118,12 +118,15 @@ source .venv/bin/activate
 
 ### 4. 必要パッケージのインストール
 
+パッケージを追加したら随時追記すること
+
 ```
 pip install fastapi uvicorn
 pip install black flake8
 pip uninstall pydantic
 pip install pydantic
 pip install python-dotenv
+pip install google-generativeai
 ```
 
 ### 5. 依存関係の記録
@@ -152,7 +155,6 @@ def read_root():
 ### 7. サーバー起動
 
 ```
-cd app
 uvicorn main:app --reload
 ```
 
