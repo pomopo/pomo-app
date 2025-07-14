@@ -10,6 +10,20 @@ html {
   height: 100vh;
 }
 
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .container {
+    flex-direction: column;
+  }
+}
+
 .bear {
   background: #ffdfb0;
   width: 30%;

@@ -33,11 +33,45 @@ body {
   padding: 2rem;
 }
 
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .dashboard-content.center {
+    padding: 1rem;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .dashboard-content.center {
+    padding: 0.5rem;
+  }
+}
+
 .timer.large {
   font-size: 54px;
   color: #39ff14;
   text-shadow: 0 0 10px #39ff14;
   margin: 2rem 0;
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .timer.large {
+    font-size: 40px;
+    margin: 1.5rem 0;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .timer.large {
+    font-size: 28px;
+    margin: 1rem 0;
+  }
 }
 
 .word-form {
@@ -46,6 +80,24 @@ body {
   align-items: center;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .word-form {
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .word-form {
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+  }
 }
 
 .word-input {
@@ -58,6 +110,24 @@ body {
   outline: none;
   box-shadow: 0 0 10px #39ff14;
   border-radius: 4px;
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .word-input {
+    font-size: 18px;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .word-input {
+    font-size: 16px;
+    padding: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 .submit-button {
@@ -79,6 +149,22 @@ body {
   box-shadow: 0 0 20px #39ff14;
 }
 
+/* タブレット・モバイル対応 */
+@media (max-width: 768px) {
+  .submit-button {
+    font-size: 16px;
+    padding: 0.4rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .submit-button {
+    font-size: 16px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+}
+
 .title {
   font-size: 48px;
   color: #39ff14;
@@ -86,6 +172,22 @@ body {
     0 0 10px #39ff14,
     0 0 20px #39ff14;
   margin-bottom: 20px;
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .title {
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .title {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
 }
 
 .timer {
@@ -139,6 +241,23 @@ body {
   margin: 2rem 0;
   text-align: center;
   line-height: 1.4;
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .timer.large {
+    font-size: 48px;
+    margin: 1.5rem 0;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .timer.large {
+    font-size: 32px;
+    margin: 1rem 0;
+    line-height: 1.2;
+  }
 }
 
 /* 曜日別カラー：トップレベルで定義すること！ */
@@ -222,35 +341,104 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  z-index: 1000;
+  overflow: hidden;
+  z-index: 10;
 }
 
 .falling-word {
   position: absolute;
-  top: -2em; /* 上からスタート */
-  font-size: 24px;
+  color: rgba(57, 255, 20, 0.7);
+  font-size: 1.2rem;
   font-family: 'Courier New', monospace;
-  color: #39ff14;
-  text-shadow: 0 0 8px #39ff14;
   white-space: nowrap;
-  user-select: none;
-  animation-name: fallWord;
-  animation-timing-function: linear;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
+  animation: fallDown 15s linear infinite;
+  opacity: 0.8;
+  text-shadow: 0 0 5px rgba(57, 255, 20, 0.5);
+  pointer-events: none;
 }
 
-@keyframes fallWord {
+@keyframes fallDown {
   0% {
-    transform: translateY(0);
-    opacity: 1;
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
   }
   100% {
-    transform: translateY(120vh);
+    transform: translateY(calc(100vh + 50px));
     opacity: 0;
+  }
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .falling-word {
+    font-size: 1rem;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .falling-word {
+    font-size: 0.8rem;
+  }
+}
+
+/* レスポンス表示エリアのレスポンシブ対応 */
+.response-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.response-text {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* タブレット対応 */
+@media (max-width: 768px) {
+  .response-box {
+    max-width: 90%;
+    padding: 0.8rem;
+  }
+
+  .response-text {
+    font-size: 16px;
+  }
+}
+
+/* モバイル対応 */
+@media (max-width: 480px) {
+  .response-box {
+    max-width: 95%;
+    padding: 0.5rem;
+  }
+
+  .response-text {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}
+
+/* 落下文字のレスポンシブ対応 */
+@media (max-width: 768px) {
+  .falling-word {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .falling-word {
+    font-size: 16px;
   }
 }

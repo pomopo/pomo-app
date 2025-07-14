@@ -1,43 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import TimeDisplay from '../components/TimeDisplay';
+import FallingWords from '../components/FallingWords';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const [dateStr, setDateStr] = useState('');
-  const [timeStr, setTimeStr] = useState('');
-  const [weekdayClass, setWeekdayClass] = useState('');
   const [word, setWord] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
-
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      const weekdayJp = now.toLocaleDateString('ja-JP', { weekday: 'long' });
-      const time = now.toTimeString().split(' ')[0];
-
-      const weekdayMap: Record<string, string> = {
-        日曜日: 'sun',
-        月曜日: 'mon',
-        火曜日: 'tue',
-        水曜日: 'wed',
-        木曜日: 'thu',
-        金曜日: 'fri',
-        土曜日: 'sat',
-      };
-
-      setDateStr(`${year}/${month}/${day}（${weekdayJp}）`);
-      setTimeStr(time);
-      setWeekdayClass(weekdayMap[weekdayJp]);
-    };
-
-    updateDateTime();
-    const timer = setInterval(updateDateTime, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,37 +29,7 @@ const Dashboard = () => {
     setWord('');
   };
 
-  const renderFallingWords = () => {
-    if (!responseMessage) return null;
-
-    const words = responseMessage.split(/[\s、。．,、]+/);
-    const instances = 10;
-    const fallingWords = [];
-
-    for (let i = 0; i < instances; i++) {
-      for (let j = 0; j < words.length; j++) {
-        const top = Math.random() * 100;
-        const left = Math.random() * 100;
-        const delay = Math.random() * 20;
-
-        fallingWords.push(
-          <div
-            key={`${i}-${j}`}
-            className="falling-word"
-            style={{
-              top: `${top}%`,
-              left: `${left}%`,
-              animationDelay: `${delay}s`,
-            }}
-          >
-            {words[j]}
-          </div>
-        );
-      }
-    }
-
-    return <div className="falling-layer">{fallingWords}</div>;
-  };
+  // FallingWordsコンポーネントを使用するので、この関数は不要になります
 
   return (
     <div className="container">
@@ -97,14 +37,11 @@ const Dashboard = () => {
       <div className="main">
         <Header />
         <div className="dashboard-content center">
-          {renderFallingWords()}
+          {responseMessage && <FallingWords words={responseMessage} />}
 
           <h2 className="title">DASHBOARD</h2>
 
-          <div className={`timer large ${weekdayClass}-color`}>
-            <div>{dateStr}</div>
-            <div>{timeStr}</div>
-          </div>
+          <TimeDisplay />
 
           <form className="word-form" onSubmit={handleSubmit}>
             <input
