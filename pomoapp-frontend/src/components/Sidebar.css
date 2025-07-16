@@ -21,6 +21,22 @@
   text-shadow: 0 0 5px #0f0;
   font-size: 1.3rem;
   margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.sidebar li:hover {
+  background-color: #0f0;
+  color: #000;
+  text-shadow: none;
+}
+
+.sidebar li.active {
+  background-color: #0f0;
+  color: #000;
+  text-shadow: none;
+  box-shadow: 0 0 10px #0f0;
 }
 
 /* タブレット対応 */

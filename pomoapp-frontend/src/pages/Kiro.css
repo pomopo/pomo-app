@@ -1,0 +1,115 @@
+/* Kiro Pomodoro Timer Styles */
+.kiro-content {
+  padding: 2rem;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  color: #39ff14;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  flex-direction: column;
+}
+
+.kiro-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.tomato-icon {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.kiro-title {
+  font-size: 2.5rem;
+  color: #39ff14;
+  text-shadow: 0 0 10px #39ff14;
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Timer Display */
+.timer-display {
+  margin: 2rem 0;
+}
+
+.time-text {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #39ff14;
+  text-shadow: 0 0 10px #39ff14;
+}
+
+/* Timer Controls */
+.timer-controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.control-btn {
+  background-color: #222;
+  color: #39ff14;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.control-btn:hover {
+  background-color: #333;
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkbox {
+  margin-right: 0.5rem;
+  font-size: 1.2rem;
+}
+
+/* Override any container border that might be set elsewhere */
+.container {
+  border: none;
+}
+
+/* Override header styles to match screenshot */
+.header {
+  background-color: #000;
+  border-bottom: 1px solid #39ff14;
+  box-shadow: none;
+}
+
+.header .logo {
+  color: #39ff14;
+  text-shadow: 0 0 10px #39ff14;
+}
+
+/* Make sure the main content area has no extra padding */
+.main {
+  background-color: #000;
+}
+
+/* Ensure sidebar matches the screenshot */
+.sidebar {
+  background-color: #000;
+  border-right: 1px solid #39ff14;
+  box-shadow: none;
+}
+
+.sidebar li {
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+}
+
+.sidebar li.active {
+  background-color: #39ff14;
+  color: #000;
+  text-shadow: none;
+}
